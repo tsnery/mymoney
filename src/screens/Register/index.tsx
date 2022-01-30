@@ -10,6 +10,11 @@ import { TransactionTypeButton } from '../../components/Forms/TransactionTypeBut
 import { CategorySelect } from '../CategorySelect';
 import { Container, Form, Header, Title, Fields, TransactionsTypes } from "./styles";
 import { InputForm } from '../../components/Forms/InputForm';
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid'
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
+import { AppRoutesParamList } from '../../routes/app.routes'
 
 type FormData = {
   [name: string]: any
@@ -25,11 +30,11 @@ export function Register() {
   const [categoryModalOpen, setCategoryModalOpen] = React.useState(false)
   const [category, setCategory] = React.useState({
     key: 'category',
-    name: 'Category',
-    icon: 'any'
+    name: 'Categoria',
   })
 
-  const { control, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) })
+  const navigation = useNavigation<BottomTabNavigationProp<AppRoutesParamList>>()
+  const { control, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(schema) })
 
   function handleTransactionTypeSelect(type: 'up' | 'down') {
     setTransactionType(type)
@@ -43,7 +48,7 @@ export function Register() {
     setCategoryModalOpen(true)
   }
 
-  function handleRegister(form: FormData) {
+  async function handleRegister(form: FormData) {
     if(!transactionType) {
       return Alert.alert('Selecione o tipo da transação')
     }
@@ -52,13 +57,40 @@ export function Register() {
       return Alert.alert('Selecione a categoria')
     }
 
-    const data = {
+    const newTransaction = {
+      id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
       transactionType,
-      category: category.key
+      category: category.key,
+      date: new Date()
     }
-    console.log(data)
+    
+    try {
+      const dataKey = "@gofinance:transactions"
+
+      const data = await AsyncStorage.getItem(dataKey)
+      const parsedData = data ? JSON.parse(data) : []
+
+      const dataFormatted = [
+        ...parsedData,
+        newTransaction
+      ]
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
+
+      reset()
+      setTransactionType('')
+      setCategory({
+        key: 'category',
+        name: 'Categoria',
+      })
+      
+      navigation.navigate('Listagem')
+      
+    } catch(error) {
+      Alert.alert('Não foi possível salvar')
+    }
   }
 
   return (

@@ -3,6 +3,7 @@ import { FlatList, FlatListProps } from 'react-native'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { default as Feather } from 'react-native-vector-icons/Feather';
 import { DataListProps } from ".";
+import { BorderlessButton } from "react-native-gesture-handler";
 
 export const Container = styled.View`
   flex: 1;
@@ -51,6 +52,10 @@ export const Photo = styled.Image`
   border-radius: 10px;
 `
 
+export const LogoutButton = styled(BorderlessButton)`
+  
+`
+
 export const Icon = styled(Feather)`
   color: ${({theme}) => theme.colors.secondary};
   font-size: ${RFValue(24)}px;
@@ -83,6 +88,4 @@ export const TransactionsList = styled(
   ).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: { paddingBottom: 24 }
-})`
-  
-`
+})``

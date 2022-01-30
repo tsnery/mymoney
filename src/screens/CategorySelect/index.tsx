@@ -7,7 +7,7 @@ import { Container, Header, Title, Category, Icon, Name, Separator, Footer } fro
 type Category = {
   key: string
   name: string
-  icon: any
+  icon?: any
 }
 
 type Props = {

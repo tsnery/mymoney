@@ -14,8 +14,11 @@ import {
   HighlightCardsList,
   Transactions,
   Title,
-  TransactionsList
+  TransactionsList,
+  LogoutButton
 } from './styles'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export type DataListProps = TransactionCardProps & {
   id: string;
@@ -59,6 +62,16 @@ export function Dashboard() {
     }
   ]
 
+  React.useEffect(() => {
+    async function getData() {
+      const dataKey = "@gofinance:transactions"
+      const data = await AsyncStorage.getItem(dataKey)
+      console.log('data: ', data)
+    }
+
+    getData()
+  }, [])
+
   return (
     <Container>
       <Header>
@@ -70,7 +83,9 @@ export function Dashboard() {
               <UserName>Tainan Nery</UserName>
             </User>
           </UserInfo>
-          <Icon name='power' />
+          <LogoutButton onPress={() => {}}>
+            <Icon name='power' />
+          </LogoutButton>
         </UserWrapper>
       </Header>
       <HighlightCardsList>
