@@ -18,58 +18,48 @@ import {
   LogoutButton
 } from './styles'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { Alert } from 'react-native';
 
 export type DataListProps = TransactionCardProps & {
   id: string;
 }
 
 export function Dashboard() {
+  const [transactions, setTransactions] = React.useState<DataListProps[]>([])
 
-  const data:DataListProps[] = [
-    {
-      id: '1',
-      type: 'positive',
-      title:'Desenvolvimento de site',
-      amount:"R$ 12.000,00",
-      category: { 
-        name: 'Vendas', 
-        icon: 'dollar-sign' 
-      },
-      date:'12/12/2022',
-    },
-    {
-      id: '2',
-      type: 'negative',
-      title:'Hamburguer Pizzy',
-      amount:"R$ 59,00",
-      category: { 
-        name: 'Alimentação', 
-        icon: 'coffee' 
-      },
-      date:'12/12/2022',
-    },
-    {
-      id: '3',
-      type: 'negative',
-      title:'Aluguel do apartamento',
-      amount:"R$ 1.200,00",
-      category: { 
-        name: 'Casa', 
-        icon: 'shopping-bag' 
-      },
-      date:'12/12/2022',
+  async function loadTransactions() {
+    try {
+      const dataKey = "@gofinance:transactions"
+      const response =  await AsyncStorage.getItem(dataKey)
+      const transactions = response ? JSON.parse(response) : []
+
+      const transactionsFormatted:DataListProps[] = transactions.map((item:DataListProps) => {
+        const amount = Number(item.amount).toLocaleString('pt-BR', { 
+          style: 'currency', currency: 'BRL' 
+        })
+        const date = Intl.DateTimeFormat('pt-BR', { 
+          day: '2-digit', month: '2-digit', year: '2-digit'
+        }).format(new Date(item.date))
+
+        return {
+          id: item.id,
+          name: item.name,
+          amount,
+          date,
+          type: item.type,
+          category: item.category
+        }
+      })
+
+      setTransactions(transactionsFormatted)
+
+    } catch(error) {
+      Alert.alert('Ocorreu um erro', 'Não foi possível carregar transações')
     }
-  ]
+  }
 
   React.useEffect(() => {
-    async function getData() {
-      const dataKey = "@gofinance:transactions"
-      const data = await AsyncStorage.getItem(dataKey)
-      console.log('data: ', data)
-    }
-
-    getData()
+    loadTransactions()
   }, [])
 
   return (
@@ -108,7 +98,7 @@ export function Dashboard() {
       <Transactions>
         <Title>Listagem</Title>
         <TransactionsList
-          data={data}
+          data={transactions}
           keyExtractor={item => item.id}
           renderItem={({item}) => <TransactionCard data={item}/>}
         />
