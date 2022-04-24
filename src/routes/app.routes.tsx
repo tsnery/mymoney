@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { Dashboard } from '../screens/Dashboard'
-import { Register } from '../screens/Register'
+import { Resume } from '../screens/Resume'
 import { useTheme } from 'styled-components'
 import { Platform } from 'react-native'
 
@@ -16,7 +16,9 @@ export type AppRoutesParamList = {
 const { Navigator, Screen } = createBottomTabNavigator<AppRoutesParamList>()
 
 export function AppRoutes() {
+
   const theme = useTheme()
+
   return (
       <Navigator
         screenOptions={{
@@ -42,8 +44,8 @@ export function AppRoutes() {
           }}
         />
         <Screen
-          name="Registro"
-          component={Register}
+          name="Resumo"
+          component={Resume}
           options={{
             tabBarIcon: (({size, color}) => {
               return (
@@ -54,7 +56,7 @@ export function AppRoutes() {
         />
         <Screen
           name="Resumo"
-          component={Register}
+          component={Resume}
           options={{
             tabBarIcon: (({size, color}) => {
               return (
