@@ -10,7 +10,7 @@ import { TransactionTypeButton } from '../../components/Forms/TransactionTypeBut
 import { CategorySelect } from '../CategorySelect';
 import { Container, Form, Header, Title, Fields, TransactionsTypes } from "./styles";
 import { InputForm } from '../../components/Forms/InputForm';
-import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
@@ -22,7 +22,7 @@ type FormData = {
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório'),
-  amount: Yup.number().typeError('Informe um valor numérico').positive('O valor não pode ser negativo')
+  amount: Yup.number().typeError('Informe um valor numérico').positive('O valor não pode ser negativo').required('Valor é obrigatório')
 })
 
 export function Register() {

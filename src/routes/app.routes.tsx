@@ -6,6 +6,7 @@ import { Dashboard } from '../screens/Dashboard'
 import { Resume } from '../screens/Resume'
 import { useTheme } from 'styled-components'
 import { Platform } from 'react-native'
+import { Register } from '../screens/Register'
 
 export type AppRoutesParamList = {
   Listagem: undefined
@@ -44,8 +45,8 @@ export function AppRoutes() {
           }}
         />
         <Screen
-          name="Resumo"
-          component={Resume}
+          name="Registro"
+          component={Register}
           options={{
             tabBarIcon: (({size, color}) => {
               return (

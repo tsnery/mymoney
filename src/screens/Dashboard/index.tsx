@@ -42,7 +42,7 @@ export type THighlightData = {
 export function Dashboard() {
   const [isLoading, setIsLoading] = React.useState(true)
   const [transactions, setTransactions] = React.useState<DataListProps[]>([])
-  const [highlightData, setHighlightData] = React.useState<THighlightData>({} as THighlightData)
+  const [highlightData, setHighlightData] = React.useState<THighlightData | null>(null)
 
   const { colors } = useTheme()
  
@@ -55,7 +55,9 @@ export function Dashboard() {
   }, []))
 
   function getLastTransactionDate(collection: DataListProps[], type: 'positive' | 'negative') {
-
+    if (collection.length <= 0) {
+      return ''
+    }
     const lastTransactionDate = new Date(Math.max.apply(Math, collection
       .filter(transaction => transaction.type === type)
       .map(transaction => new Date(transaction.date).getTime())))
@@ -105,6 +107,10 @@ export function Dashboard() {
       const lastTransactionExpensives = getLastTransactionDate(transactions, 'negative')
       const totalInterval = `01 à ${lastTransactionExpensives}`
       const total = entriesTotal - expensivesTotal
+      
+      if (!total) {
+        return setHighlightData(null)
+      }
 
       setHighlightData({
         entries: {
@@ -155,18 +161,18 @@ export function Dashboard() {
             <HighlightCard 
               type='up'
               title='Entradas' 
-              amount={highlightData.entries.amount}
-              lastTransaction={highlightData.entries.lastTransaction} />
+              amount={highlightData?.entries.amount || 'R$ 0,00'}
+              lastTransaction={highlightData?.entries.lastTransaction || 'Sem registro de entradas'} />
             <HighlightCard 
               type='down'
               title='Saídas' 
-              amount={highlightData.expensives.amount}
-              lastTransaction={highlightData.expensives.lastTransaction} />        
+              amount={highlightData?.expensives.amount || 'R$ 0,00'}
+              lastTransaction={highlightData?.expensives.lastTransaction || 'Sem registro de saídas'} />        
             <HighlightCard 
               type='total'
               title='Total' 
-              amount={highlightData.total.amount} 
-              lastTransaction={highlightData.total.lastTransaction} />
+              amount={highlightData?.total.amount || 'R$ 0,00'} 
+              lastTransaction={highlightData?.total.lastTransaction || ''} />
           </HighlightCardsList>
           <Transactions>
             <Title>Listagem</Title>
