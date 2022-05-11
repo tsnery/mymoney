@@ -1,4 +1,4 @@
-package com.curso01;
+package com.mymoney;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "curso01";
+    return "mymoney";
   }
 
   @Override
