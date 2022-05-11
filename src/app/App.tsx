@@ -7,8 +7,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AppRoutes } from '../routes/app.routes';
 import { LogBox, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Login } from '../screens/Login';
 import { AuthProvider } from '../context/AuthContext';
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
+
+const { OAUTH_CLIENT_ID } = process.env
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
@@ -16,13 +18,19 @@ LogBox.ignoreLogs([
 
 const App = () => {
 
+  React.useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: OAUTH_CLIENT_ID
+    })
+  }, [])
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
           <StatusBar barStyle="light-content" />
           <AuthProvider>
-            <Login />
+            <AppRoutes />
           </AuthProvider>
         </NavigationContainer>
       </ThemeProvider>

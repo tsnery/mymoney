@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "337658059959",
+    "project_id": "finances-382ff",
+    "storage_bucket": "finances-382ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337658059959:android:84fec21b948ad0b254c132",
+        "android_client_info": {
+          "package_name": "com.mymoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337658059959-snnbsnlnfr7qf071c3dgmjotj69gvhok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mymoney",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "337658059959-sgjq1hhpk712c6i3efg584ok8ll3olv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2dwRQdHybAPdSuOkXvqA1GXlkFagXWDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337658059959-sgjq1hhpk712c6i3efg584ok8ll3olv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

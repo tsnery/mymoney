@@ -3,7 +3,7 @@ import { Google, Apple } from '../../../assets'
 import * as Styles from './styles'
 import { TSignInButtonProps } from './types'
 
-export function SignInSocialButton({ title, type }: TSignInButtonProps) {
+export function SignInSocialButton({ title, type, ...rest }: TSignInButtonProps) {
 
   const renderIcon = () => {
     const icon = {
@@ -14,7 +14,7 @@ export function SignInSocialButton({ title, type }: TSignInButtonProps) {
   }
 
   return (
-    <Styles.Container>
+    <Styles.Container {...rest}>
       <Styles.IconContainer>
         {renderIcon()}
       </Styles.IconContainer>
