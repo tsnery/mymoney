@@ -4,6 +4,7 @@ import { TUser } from "../../models/User"
 export type TAuthContextProps = {
   user: TUser | null
   onGoogleSignIn: () => Promise<void>
+  signOut: () => void
 }
 
 export type TAuthProviderProps = {

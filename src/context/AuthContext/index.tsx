@@ -5,7 +5,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 import { TUser } from '../../models/User'
 import { TAuthContextProps, TAuthProviderProps, TGoogleAuthResponse } from './types'
-import { getItemFromStorage, setItemOnStorage } from '../../helpers'
+import { getItemFromStorage, removeItemFromStorage, setItemOnStorage } from '../../helpers'
 
 export const AuthContext = React.createContext({} as TAuthContextProps)
 
@@ -27,6 +27,11 @@ export function AuthProvider({ children }: TAuthProviderProps) {
     }
   }
 
+  const signOut = () => {
+    removeItemFromStorage('@gofinances:user')
+    setUser(null)
+  }
+
   const onGoogleSignIn = async () => {
     try {
       const { idToken } = await GoogleSignin.signIn()
@@ -46,7 +51,7 @@ export function AuthProvider({ children }: TAuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, onGoogleSignIn }}>
+    <AuthContext.Provider value={{ user, onGoogleSignIn, signOut }}>
       {children}
     </AuthContext.Provider>
   )

@@ -19,4 +19,12 @@ function setItemOnStorage(key: string, data: any) {
   AsyncStorage.setItem(key, JSON.stringify(data)).then(response => response).catch(error => { throw new Error(error.message) })
 }
 
-export { getItemFromStorage, setItemOnStorage }
+function removeItemFromStorage(key: string) {
+  AsyncStorage.removeItem(key).then(response => response).catch((error): any => { throw new Error(error.message) })
+}
+
+export {
+  getItemFromStorage,
+  setItemOnStorage,
+  removeItemFromStorage
+}
