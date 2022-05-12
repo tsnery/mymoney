@@ -5,24 +5,10 @@ import { useFocusEffect } from '@react-navigation/native'
 import { useTheme } from 'styled-components'
 
 import { HighlightCard } from '../../components/HighlightCard'
-import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard'
+import { TransactionCard } from '../../components/TransactionCard'
 import { useAuth } from '../../hooks/useAuth'
 import * as Styles from './styles'
-
-export type DataListProps = TransactionCardProps & {
-  id: string;
-}
-
-export type THighlightProps = {
-  amount: string
-  lastTransaction: string
-}
-
-export type THighlightData = {
-  entries: THighlightProps
-  expensives: THighlightProps
-  total: THighlightProps
-}
+import { DataListProps, THighlightData } from './types'
 
 export function Dashboard() {
   const [isLoading, setIsLoading] = React.useState(true)
@@ -30,7 +16,7 @@ export function Dashboard() {
   const [highlightData, setHighlightData] = React.useState<THighlightData | null>(null)
 
   const { colors } = useTheme()
-  const { signOut } = useAuth()
+  const { signOut, user } = useAuth()
 
   React.useEffect(() => {
     loadTransactions()
@@ -132,10 +118,10 @@ export function Dashboard() {
             <Styles.Header>
               <Styles.UserWrapper>
                 <Styles.UserInfo>
-                  <Styles.Photo source={{ uri: 'https://avatars.githubusercontent.com/u/26428766?v=4' }} />
+                  <Styles.Photo source={{ uri: user?.photo || '' }} />
                   <Styles.User>
                     <Styles.UserGreeting>Olá,</Styles.UserGreeting>
-                    <Styles.UserName>Tainan Nery</Styles.UserName>
+                    <Styles.UserName>{user?.name}</Styles.UserName>
                   </Styles.User>
                 </Styles.UserInfo>
                 <Styles.LogoutButton onPress={signOut}>

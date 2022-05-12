@@ -4,6 +4,7 @@ import { TextInputProps } from 'react-native'
 import { Input } from '../Input'
 import { Container, Error } from './styles'
 import { Controller } from 'react-hook-form'
+import { useTheme } from 'styled-components'
 
 type Props = TextInputProps & {
   control: Control
@@ -11,14 +12,18 @@ type Props = TextInputProps & {
   error: string
 }
 
-export function InputForm({name, control, error, ...rest}:Props) {
+export function InputForm({ name, control, error, ...rest }: Props) {
+
+  const { colors } = useTheme()
+
   return (
     <Container>
       <Controller
         control={control}
-        render={({field: { onChange, value }}) => (
+        render={({ field: { onChange, value } }) => (
           <Input
             onChangeText={onChange}
+            placeholderTextColor={colors.text}
             value={value}
             {...rest}
           />
