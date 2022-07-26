@@ -6,5 +6,7 @@ module.exports = {
   rules: {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
+    semi: 'off',
+    'prettier/prettier': 'off',
   },
-};
+}
