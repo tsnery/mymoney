@@ -8,5 +8,6 @@ module.exports = {
     '@typescript-eslint/no-shadow': ['error'],
     semi: 'off',
     'prettier/prettier': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
 }
