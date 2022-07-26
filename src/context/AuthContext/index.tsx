@@ -53,7 +53,6 @@ export function AuthProvider({children}: TAuthProviderProps) {
         email: response.email,
         photo: response.photoURL,
       }
-      console.log('userData', userData)
       setItemOnStorage('@gofinances:user', userData)
       setUser(userData)
     } catch (error: any) {

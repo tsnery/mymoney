@@ -1,5 +1,5 @@
 import React from 'react'
-import {Alert} from 'react-native'
+import {Alert, Platform} from 'react-native'
 import {Logo} from '../../assets'
 import {SignInSocialButton} from '../../components/Atoms/SignInSocialButton'
 import {useAuth} from '../../hooks/useAuth'
@@ -14,6 +14,21 @@ export function Login() {
       await onGoogleSignIn()
     } catch (error: any) {
       Alert.alert('Erro ao logar', error.message)
+    }
+  }
+
+  const showPlatformSignInButton = () => {
+    switch (Platform.OS) {
+      case 'ios':
+        return <SignInSocialButton title="Entrar com Apple" type="Apple" />
+      default:
+        return (
+          <SignInSocialButton
+            onPress={handleGoogleSignIn}
+            title="Entrar com Google"
+            type="Google"
+          />
+        )
     }
   }
 
@@ -32,12 +47,7 @@ export function Login() {
       </Styles.Header>
       <Styles.Footer>
         <Styles.ButtonWrapper>
-          <SignInSocialButton
-            onPress={handleGoogleSignIn}
-            title="Entrar com Google"
-            type="Google"
-          />
-          <SignInSocialButton title="Entrar com Apple" type="Apple" />
+          {showPlatformSignInButton()}
         </Styles.ButtonWrapper>
       </Styles.Footer>
     </Styles.Container>
