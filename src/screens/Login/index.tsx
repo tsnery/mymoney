@@ -1,14 +1,13 @@
 import React from 'react'
-import { Alert } from 'react-native'
-import { Logo } from '../../assets'
-import { SignInSocialButton } from '../../components/Atoms/SignInSocialButton'
-import { useAuth } from '../../hooks/useAuth'
+import {Alert} from 'react-native'
+import {Logo} from '../../assets'
+import {SignInSocialButton} from '../../components/Atoms/SignInSocialButton'
+import {useAuth} from '../../hooks/useAuth'
 
 import * as Styles from './styles'
 
 export function Login() {
-
-  const { onGoogleSignIn } = useAuth()
+  const {onGoogleSignIn} = useAuth()
 
   const handleGoogleSignIn = async () => {
     try {
@@ -33,8 +32,12 @@ export function Login() {
       </Styles.Header>
       <Styles.Footer>
         <Styles.ButtonWrapper>
-          <SignInSocialButton onPress={handleGoogleSignIn} title='Entrar com Google' type='Google' />
-          <SignInSocialButton title='Entrar com Apple' type='Apple' />
+          <SignInSocialButton
+            onPress={handleGoogleSignIn}
+            title="Entrar com Google"
+            type="Google"
+          />
+          <SignInSocialButton title="Entrar com Apple" type="Apple" />
         </Styles.ButtonWrapper>
       </Styles.Footer>
     </Styles.Container>

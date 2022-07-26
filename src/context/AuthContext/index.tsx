@@ -1,15 +1,23 @@
 import React from 'react'
-import { Alert } from 'react-native'
+import {Alert} from 'react-native'
 import auth from '@react-native-firebase/auth'
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import {GoogleSignin} from '@react-native-google-signin/google-signin'
 
-import { TUser } from '../../models/User'
-import { TAuthContextProps, TAuthProviderProps, TGoogleAuthResponse } from './types'
-import { getItemFromStorage, removeItemFromStorage, setItemOnStorage } from '../../helpers'
+import {TUser} from '../../models/User'
+import {
+  TAuthContextProps,
+  TAuthProviderProps,
+  TGoogleAuthResponse,
+} from './types'
+import {
+  getItemFromStorage,
+  removeItemFromStorage,
+  setItemOnStorage,
+} from '../../helpers'
 
 export const AuthContext = React.createContext({} as TAuthContextProps)
 
-export function AuthProvider({ children }: TAuthProviderProps) {
+export function AuthProvider({children}: TAuthProviderProps) {
   const [user, setUser] = React.useState<TUser | null>(null)
 
   React.useEffect(() => {
@@ -34,15 +42,18 @@ export function AuthProvider({ children }: TAuthProviderProps) {
 
   const onGoogleSignIn = async () => {
     try {
-      const { idToken } = await GoogleSignin.signIn()
+      const {idToken} = await GoogleSignin.signIn()
       const googleCredential = auth.GoogleAuthProvider.credential(idToken)
-      const { user: response } = await auth().signInWithCredential(googleCredential) as TGoogleAuthResponse
+      const {user: response} = (await auth().signInWithCredential(
+        googleCredential,
+      )) as TGoogleAuthResponse
       const userData = {
         id: response.uid,
         name: response.displayName,
         email: response.email,
-        photo: response.photoURL
+        photo: response.photoURL,
       }
+      console.log('userData', userData)
       setItemOnStorage('@gofinances:user', userData)
       setUser(userData)
     } catch (error: any) {
@@ -51,7 +62,7 @@ export function AuthProvider({ children }: TAuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, onGoogleSignIn, signOut }}>
+    <AuthContext.Provider value={{user, onGoogleSignIn, signOut}}>
       {children}
     </AuthContext.Provider>
   )
